@@ -23,16 +23,9 @@ fn count_byte(i: u8, arr: Vec<String>) -> Vec<i32> {
 
 fn remove_if(i: u8, arr: &mut Vec<String>, count: Vec<i32>) {
 	let mut j: i32 = 0;
-	let n: i32;
 	if count[0] != count[1] {
-		if count[1] > count[0] {
-			n = 48; //invert
-		}
-		else {
-			n = 49; //invert
-		}
-		while (j as usize) < arr.len() {
-			if arr[j as usize].as_bytes()[i as usize] == n as u8 {
+		while (j as usize) < arr.len() {										// invert the result
+			if arr[j as usize].as_bytes()[i as usize] == if count[1] > count[0] { 48 } else { 49 } {
 				arr.remove(j as usize);
 				j -= 1;
 			}
@@ -40,8 +33,8 @@ fn remove_if(i: u8, arr: &mut Vec<String>, count: Vec<i32>) {
 		}
 	}
 	else {
-		while (j as usize) < arr.len() {
-			if arr[j as usize].as_bytes()[i as usize] == 49 { //invert
+		while (j as usize) < arr.len() {			// turn to 48
+			if arr[j as usize].as_bytes()[i as usize] == 49 {
 				arr.remove(j as usize);
 				j -= 1;
 			}
