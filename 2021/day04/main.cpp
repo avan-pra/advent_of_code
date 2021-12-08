@@ -56,28 +56,35 @@ std::vector<t_case>	get_nbr_as_int(std::string &str)
 	return ret;
 }
 
-int	check_valid_grid(std::vector<std::vector< std::vector<t_case> > > &all_grid) {
+int	check_valid_grid(std::vector< std::vector<t_case> > grid) {
 	int j = 0;
 
-	for (auto grid = all_grid.begin(); grid != all_grid.end(); ++grid) {
-		for (int i = 0; i < 5; ++i) {
-			j = 0;
-			while ((*grid)[i][j].status == true) {
-				++j;
-				if (j == 5) {
-					return (grid - all_grid.begin());
-				}
+	for (int i = 0; i < 5; ++i) {
+		j = 0;
+		while (grid[i][j].status == true) {
+			++j;
+			if (j == 5) {
+				return (1);
 			}
-			j = 0;
-			while ((*grid)[j][i].status == true) {
-				++j;
-				if (j == 5) {
-					return (grid - all_grid.begin());
-				}
+		}
+		j = 0;
+		while (grid[j][i].status == true) {
+			++j;
+			if (j == 5) {
+				return (1);
 			}
 		}
 	}
-	return -1;
+	return 0;
+}
+
+void	remove_grid(std::vector<std::vector< std::vector<t_case> > > &all_grid) {
+	for (auto grid = all_grid.begin(); grid != all_grid.end(); ++grid) {
+		if (check_valid_grid(*grid) == 1) {
+			grid = all_grid.erase(grid);
+			grid -= 1;
+		}
+	}
 }
 
 int calculate_score(std::vector< std::vector<t_case> > grid, int new_number) {
@@ -120,7 +127,8 @@ int main()
 	}
 	
 	for (auto it_nbr = numbers.begin(); it_nbr != numbers.end(); ++it_nbr) {
-		if (check_valid_grid(all_grid) == -1) {
+		remove_grid(all_grid);
+		if (all_grid.size() != 1 || check_valid_grid(all_grid[0]) == 0) {
 			for (auto grid = all_grid.begin(); grid != all_grid.end(); ++grid) {
 				for (auto row = (*grid).begin(); row != (*grid).end(); ++row) {
 					for (auto curr_case = (*row).begin(); curr_case != (*row).end(); ++curr_case) {
@@ -131,9 +139,10 @@ int main()
 				}
 			}
 		}
-		else {
-			std::cout << calculate_score(all_grid[check_valid_grid(all_grid)], *(it_nbr - 1)) << std::endl;
+		if (all_grid.size() == 1 && check_valid_grid(all_grid[0]) == 1) {
+			std::cout << calculate_score(all_grid[0], *(it_nbr)) << std::endl;
 			return 0;
 		}
 	}
+	std::cout << all_grid.size() << std::endl;
 }
