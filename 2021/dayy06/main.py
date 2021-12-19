@@ -19,7 +19,6 @@ for i in range(256):
 
     lanternfishs = new_lanter
     new_lanter = [0 for i in range(9)]
-    
 
 # print(lanternfishs)
 print(sum(lanternfishs))
