@@ -17,11 +17,11 @@ for inp in inps:
     xend = int(inp[1][0])
     yend = int(inp[1][1])
     # swap if superior
-    if (xend < x):
+    if (xend < x and y == yend):
         tmp = xend
         xend = x
         x = tmp
-    if (yend < y):
+    if (yend < y and x == xend):
         tmp = yend
         yend = y
         y = tmp
@@ -35,11 +35,18 @@ for inp in inps:
         while x <= xend:
             Matrix[x][y] += 1
             x += 1
-    # elif :
-    #     while x <= xend and y < yend:
-    #         Matrix[x][y] += 1
-    #         x += 1
-    #         y += 1
+    else:
+        while x != xend and y != yend:
+            Matrix[x][y] += 1
+            if x > xend:
+                x -= 1
+            else:
+                x += 1
+            if y > yend:
+                y -= 1
+            else:
+                y += 1
+        Matrix[x][y] += 1
 
 # print(Matrix)
 
