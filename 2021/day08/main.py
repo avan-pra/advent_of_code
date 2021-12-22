@@ -84,9 +84,9 @@ for line in fd:
         eight: '8',
         nine: '9'
     }
+    out = ''
     for test_digit in result:
-        out = ''
         if test_digit != ():
-            if compare[test_digit] == '1' or compare[test_digit] == '4' or compare[test_digit] == '7' or compare[test_digit] == '8':
-                solution += 1
+            out += compare[test_digit]
+    solution += int(out)
 print(solution)
