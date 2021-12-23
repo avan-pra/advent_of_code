@@ -44,7 +44,7 @@ def flash(x, y):
         elif in_map(pos[0], pos[1]) and hasnt_flashed(pos[0], pos[1]):
             octopuses[pos[0]][pos[1]] += 1
 
-for i in range(100):
+for i in range(1000):
     for x in range(len(octopuses)):
         for y in range(len(octopuses[x])):
             if octopuses[x][y] != 0:
@@ -57,6 +57,12 @@ for i in range(100):
                     octopuses[x][y] += 1
             elif hasnt_flashed(x, y):
                 octopuses[x][y] += 1
+    if (len(positions) == 100):
+        for row in octopuses:
+            print(row)
+        print(i + 1) # because we start at 0 kekw
+        exit()
+
     positions = []
 
 print(flashes)
