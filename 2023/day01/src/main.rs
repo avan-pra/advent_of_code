@@ -11,7 +11,7 @@ fn main_first_part() {
 
 static ARR: [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
-fn main() {
+fn main_submitted() {
     let mut nbr: u32 = 0;
     for line in std::fs::read_to_string("input").unwrap().lines() {
         let mut firstp = line.find(|c: char| {return c.is_numeric(); }).unwrap_or(line.len() - 1);
@@ -31,6 +31,28 @@ fn main() {
             }
         }
         nbr += first as u32 * 10 + last as u32;
+    }
+    println!("{}", nbr);
+}
+
+fn main() {
+    let mut nbr: u32 = 0;
+
+    for line in std::fs::read_to_string("input").unwrap().lines() {
+        let nline = line.replace("one", "o1e")
+            .replace("two", "t2o")
+            .replace("three", "t3ree")
+            .replace("four", "f4ur")
+            .replace("five", "f5ve")
+            .replace("six", "s6x")
+            .replace("seven", "s7ven")
+            .replace("eight", "e8ght")
+            .replace("nine", "n9ne");
+
+        let first = nline.as_bytes()[nline.find(|c: char| {return c.is_numeric(); }).unwrap()];
+        let last = nline.as_bytes()[nline.rfind(|c: char| {return c.is_numeric(); }).unwrap()];
+        // println!("{} | {}", first - 48, last - 48);
+        nbr += (first - 48) as u32 * 10 + (last - 48) as u32;
     }
     println!("{}", nbr);
 }
